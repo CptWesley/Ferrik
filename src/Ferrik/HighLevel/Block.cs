@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace Ferrik.HighLevel
 {
@@ -20,14 +21,11 @@ namespace Ferrik.HighLevel
         public IEnumerable<Statement> Statements { get; }
 
         /// <inheritdoc/>
-        public override IEnumerable<TypedOpCode> ToOpCodes()
+        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
         {
             foreach (Statement statement in Statements)
             {
-                foreach (TypedOpCode opCode in statement.ToOpCodes())
-                {
-                    yield return opCode;
-                }
+                statement.Emit(il, new Dictionary<string, int>(locals));
             }
         }
     }
