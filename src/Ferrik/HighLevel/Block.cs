@@ -23,9 +23,10 @@ namespace Ferrik.HighLevel
         /// <inheritdoc/>
         public override void Emit(ILGenerator il, Dictionary<string, int> locals)
         {
+            Dictionary<string, int> newLocals = new Dictionary<string, int>(locals);
             foreach (Statement statement in Statements)
             {
-                statement.Emit(il, new Dictionary<string, int>(locals));
+                statement.Emit(il, newLocals);
             }
         }
     }

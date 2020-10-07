@@ -260,6 +260,10 @@ namespace Ferrik.LowLevel {{
         /// <inheritdoc/>
         public override void Emit(System.Reflection.Emit.ILGenerator il)
             => il?.Emit(System.Reflection.Emit.OpCodes.{opCode}{ToArguments(args.Length)});
+        
+        /// <inheritdoc/>
+        public override string ToString()
+            => ""{instructionName}""{ToToStringArguments(args.Length)};
     }}
 }}
 ";
@@ -307,6 +311,19 @@ namespace Ferrik.LowLevel {{
             }
 
             return ", " + string.Join(", ", args);
+        }
+
+        private static string ToToStringArguments(int count)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < count; i++)
+            {
+                sb.Append(" + \" \" + ");
+                sb.Append($"Arg{i + 1}");
+            }
+
+            return sb.ToString();
         }
 
         private static string ToClassName(string instructionName)

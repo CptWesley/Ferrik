@@ -46,6 +46,7 @@ namespace Ferrik
                 throw new ArgumentNullException(nameof(opCode));
             }
 
+            Console.WriteLine(opCode);
             opCode.Emit(il);
         }
 
