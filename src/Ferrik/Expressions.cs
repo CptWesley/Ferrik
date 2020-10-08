@@ -35,6 +35,33 @@ namespace Ferrik
             => new AddExpression(left, right);
 
         /// <summary>
+        /// Creates a new multiplication expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Mul(Expression left, Expression right)
+            => new MulExpression(left, right);
+
+        /// <summary>
+        /// Creates a new division expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Div(Expression left, Expression right)
+            => new DivExpression(left, right);
+
+        /// <summary>
+        /// Creates a new modulo expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Mod(Expression left, Expression right)
+            => new ModExpression(left, right);
+
+        /// <summary>
         /// Creates a new boolean constant expression.
         /// </summary>
         /// <param name="value">The value of the boolean constant.</param>
