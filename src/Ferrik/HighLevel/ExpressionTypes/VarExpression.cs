@@ -33,9 +33,27 @@ namespace Ferrik.HighLevel.ExpressionTypes
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            ushort index = scope.Get(Name);
-            il.Emit(GetOpCode(index));
+            if (Name != null && Name.Length > 1 && Name[0] == '@' && ushort.TryParse(Name.Substring(1), out ushort paramIndex))
+            {
+                il.Emit(GetParamOpCode(paramIndex));
+            }
+            else
+            {
+                ushort index = scope.Get(Name);
+                il.Emit(GetOpCode(index));
+            }
         }
+
+        private static TypedOpCode GetParamOpCode(ushort index)
+            => index switch
+            {
+                0 => TypedOpCodes.Ldarg0,
+                1 => TypedOpCodes.Ldarg1,
+                2 => TypedOpCodes.Ldarg2,
+                3 => TypedOpCodes.Ldarg3,
+                ushort x when x <= 255 => TypedOpCodes.LdargS((byte)index),
+                _ => TypedOpCodes.Ldarg(index),
+            };
 
         private static TypedOpCode GetOpCode(ushort index)
             => index switch
