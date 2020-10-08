@@ -43,10 +43,29 @@ namespace Ferrik.Tests
             string methodName = "DynamicMethod";
             MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), new[] { typeof(int), typeof(int) });
             ILGenerator il = mb.GetILGenerator();
-            Statement body = Statements.Return(Expressions.Add(Expressions.Var("@1"), Expressions.Var("@2")));
+            Statement body = Statements.Return(Expressions.Add(Expressions.Arg(1), Expressions.Arg(2)));
             il.Emit(body);
             object dynamicObject = tb.CreateInstance();
             AssertThat(dynamicObject.Invoke(mb, 3, 4)).IsEqualTo(7);
+        }
+
+        /// <summary>
+        /// Checks that a simple if works correctly.
+        /// </summary>
+        [Fact]
+        public static void If()
+        {
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(bool), new[] { typeof(int) });
+            ILGenerator il = mb.GetILGenerator();
+            Statement body = Statements.Builder()
+                .If(Expressions.LesserThan(Expressions.Arg(1), Expressions.Int(42)), Statements.Return(Expressions.False()))
+                .Return(Expressions.True());
+            il.Emit(body);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb, 40)).IsEqualTo(false);
+            AssertThat(dynamicObject.Invoke(mb, 80)).IsEqualTo(true);
         }
     }
 }

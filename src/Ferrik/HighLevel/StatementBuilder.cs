@@ -53,6 +53,15 @@ namespace Ferrik.HighLevel
             => Add(Statements.Assign(name, expression));
 
         /// <summary>
+        /// Adds a variable assignment statement.
+        /// </summary>
+        /// <param name="index">The index of the argument variable.</param>
+        /// <param name="expression">The expression of the new value of the variable.</param>
+        /// <returns>The same builder.</returns>
+        public StatementBuilder Assign(int index, Expression expression)
+            => Add(Statements.Assign(index, expression));
+
+        /// <summary>
         /// Adds a return statement.
         /// </summary>
         /// <param name="expression">The expression representing the value to return.</param>
@@ -90,5 +99,14 @@ namespace Ferrik.HighLevel
 
             return Add(action(new StatementBuilder()));
         }
+
+        /// <summary>
+        /// Adds a new if statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="then">The body of the if statement.</param>
+        /// <returns>The same builder.</returns>
+        public StatementBuilder If(Expression condition, Statement then)
+            => Add(Statements.If(condition, then));
     }
 }

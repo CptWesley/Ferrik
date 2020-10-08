@@ -26,6 +26,14 @@ namespace Ferrik
             => new VarExpression(name);
 
         /// <summary>
+        /// Creates a new variable expression from an argument.
+        /// </summary>
+        /// <param name="index">The index of the argument.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Arg(int index)
+            => new VarExpression("@" + index);
+
+        /// <summary>
         /// Creates a new addition expression.
         /// </summary>
         /// <param name="left">The left-hand side of the operation.</param>
@@ -35,13 +43,22 @@ namespace Ferrik
             => new AddExpression(left, right);
 
         /// <summary>
+        /// Creates a new subtraction expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Subtract(Expression left, Expression right)
+            => new SubtractExpression(left, right);
+
+        /// <summary>
         /// Creates a new multiplication expression.
         /// </summary>
         /// <param name="left">The left-hand side of the operation.</param>
         /// <param name="right">The right-hand side of the operation.</param>
         /// <returns>The new expression.</returns>
-        public static Expression Mul(Expression left, Expression right)
-            => new MulExpression(left, right);
+        public static Expression Multiply(Expression left, Expression right)
+            => new MultiplyExpression(left, right);
 
         /// <summary>
         /// Creates a new division expression.
@@ -49,8 +66,8 @@ namespace Ferrik
         /// <param name="left">The left-hand side of the operation.</param>
         /// <param name="right">The right-hand side of the operation.</param>
         /// <returns>The new expression.</returns>
-        public static Expression Div(Expression left, Expression right)
-            => new DivExpression(left, right);
+        public static Expression Divide(Expression left, Expression right)
+            => new DivideExpression(left, right);
 
         /// <summary>
         /// Creates a new modulo expression.
@@ -58,8 +75,53 @@ namespace Ferrik
         /// <param name="left">The left-hand side of the operation.</param>
         /// <param name="right">The right-hand side of the operation.</param>
         /// <returns>The new expression.</returns>
-        public static Expression Mod(Expression left, Expression right)
-            => new ModExpression(left, right);
+        public static Expression Modulo(Expression left, Expression right)
+            => new ModuloExpression(left, right);
+
+        /// <summary>
+        /// Creates a new and expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression And(Expression left, Expression right)
+            => new AndExpression(left, right);
+
+        /// <summary>
+        /// Creates a new or expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Or(Expression left, Expression right)
+            => new OrExpression(left, right);
+
+        /// <summary>
+        /// Creates a new lesser-than expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression LesserThan(Expression left, Expression right)
+            => new LesserThanExpression(left, right);
+
+        /// <summary>
+        /// Creates a new greater-than expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression GreaterThan(Expression left, Expression right)
+            => new GreaterThanExpression(left, right);
+
+        /// <summary>
+        /// Creates a new equals expression.
+        /// </summary>
+        /// <param name="left">The left-hand side of the operation.</param>
+        /// <param name="right">The right-hand side of the operation.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Equals(Expression left, Expression right)
+            => new EqualsExpression(left, right);
 
         /// <summary>
         /// Creates a new boolean constant expression.

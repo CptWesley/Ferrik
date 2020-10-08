@@ -37,13 +37,13 @@ blt.un.s sbyte
 bne.un int
 bne.un.s sbyte
 box System.Type
-br int
-br.s sbyte
+br System.Reflection.Emit.Label
+br.s System.Reflection.Emit.Label
 break
-brfalse int
-brfalse.s sbyte
-brtrue int
-brtrue.s sbyte
+brfalse System.Reflection.Emit.Label
+brfalse.s System.Reflection.Emit.Label
+brtrue System.Reflection.Emit.Label
+brtrue.s System.Reflection.Emit.Label
 call System.Reflection.MethodInfo
 callvirt System.Reflection.MethodInfo
 castclass System.Type

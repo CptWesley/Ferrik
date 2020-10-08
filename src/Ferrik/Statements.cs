@@ -20,6 +20,15 @@ namespace Ferrik
             => new AssignStatement(name, value);
 
         /// <summary>
+        /// Creates a new assign statement.
+        /// </summary>
+        /// <param name="index">The index of the argument variable.</param>
+        /// <param name="value">The value to be assigned to the variable.</param>
+        /// <returns>The new statement.</returns>
+        public static Statement Assign(int index, Expression value)
+            => new AssignStatement("@" + index, value);
+
+        /// <summary>
         /// Creates a new block statement.
         /// </summary>
         /// <param name="statements">The statements in the block.</param>
@@ -50,5 +59,14 @@ namespace Ferrik
         /// <returns>The new statement.</returns>
         public static Statement Return(Expression expression)
             => new ReturnStatement(expression);
+
+        /// <summary>
+        /// Creates a new if statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="then">The body of the if statement.</param>
+        /// <returns>The new statement.</returns>
+        public static Statement If(Expression condition, Statement then)
+            => new IfStatement(condition, then);
     }
 }
