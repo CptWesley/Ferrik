@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection.Emit;
-using Ferrik.LowLevel;
 
-namespace Ferrik.HighLevel
+namespace Ferrik.HighLevel.Expressions
 {
     /// <summary>
     /// Represents a variable expression.
@@ -23,31 +21,20 @@ namespace Ferrik.HighLevel
         public string Name { get; }
 
         /// <inheritdoc/>
-        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
+        public override void Emit(ILGenerator il, Scope scope)
         {
             if (il is null)
             {
                 throw new ArgumentNullException(nameof(il));
             }
 
-            if (locals is null)
+            if (scope is null)
             {
-                throw new ArgumentNullException(nameof(locals));
+                throw new ArgumentNullException(nameof(scope));
             }
 
-            if (!locals.TryGetValue(Name, out int temp))
-            {
-                throw new Exception($"Variable '{Name}' not bound.");
-            }
-
-            ushort index = (ushort)temp;
-
-            if (index != temp)
-            {
-                throw new Exception($"Index of local variable out of bounds.");
-            }
-
-            il.Emit(new LdlocOpCode(index));
+            ushort index = scope.Get(Name);
+            il.Emit(TypedOpCodes.Ldloc(index));
         }
     }
 }

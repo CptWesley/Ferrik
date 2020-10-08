@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel
+namespace Ferrik.HighLevel.Statements
 {
     /// <summary>
     /// Represents a variable declaration.
@@ -28,20 +27,20 @@ namespace Ferrik.HighLevel
         public Type Type { get; }
 
         /// <inheritdoc/>
-        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
+        public override void Emit(ILGenerator il, Scope scope)
         {
             if (il is null)
             {
                 throw new ArgumentNullException(nameof(il));
             }
 
-            if (locals is null)
+            if (scope is null)
             {
-                throw new ArgumentNullException(nameof(locals));
+                throw new ArgumentNullException(nameof(scope));
             }
 
             LocalBuilder lb = il.DeclareLocal(Type);
-            locals[Name] = lb.LocalIndex;
+            scope.Add(Name, lb.LocalIndex);
         }
     }
 }

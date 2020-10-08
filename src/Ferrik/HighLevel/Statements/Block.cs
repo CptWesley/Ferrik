@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel
+namespace Ferrik.HighLevel.Statements
 {
     /// <summary>
     /// Represents a statement block.
@@ -21,12 +22,17 @@ namespace Ferrik.HighLevel
         public IEnumerable<Statement> Statements { get; }
 
         /// <inheritdoc/>
-        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
+        public override void Emit(ILGenerator il, Scope scope)
         {
-            Dictionary<string, int> newLocals = new Dictionary<string, int>(locals);
+            if (scope is null)
+            {
+                throw new ArgumentNullException(nameof(scope));
+            }
+
+            Scope newScope = scope.CreateChild();
             foreach (Statement statement in Statements)
             {
-                statement.Emit(il, newLocals);
+                statement.Emit(il, newScope);
             }
         }
     }

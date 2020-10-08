@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection.Emit;
-using Ferrik.LowLevel;
 
-namespace Ferrik.HighLevel
+namespace Ferrik.HighLevel.Expressions
 {
     /// <summary>
     /// Represents an integer expression.
@@ -29,16 +27,16 @@ namespace Ferrik.HighLevel
         public Expression Right { get; }
 
         /// <inheritdoc/>
-        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
+        public override void Emit(ILGenerator il, Scope scope)
         {
             if (il is null)
             {
                 throw new ArgumentNullException(nameof(il));
             }
 
-            Left.Emit(il, locals);
-            Right.Emit(il, locals);
-            il.Emit(new AddOpCode());
+            Left.Emit(il, scope);
+            Right.Emit(il, scope);
+            il.Emit(TypedOpCodes.Add);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
+﻿using System.Reflection.Emit;
 
 namespace Ferrik
 {
@@ -13,13 +12,13 @@ namespace Ferrik
         /// </summary>
         /// <param name="il">The given IL generator.</param>
         public void Emit(ILGenerator il)
-            => Emit(il, new Dictionary<string, int>());
+            => Emit(il, new Scope());
 
         /// <summary>
         /// Emits itself to the given IL generator.
         /// </summary>
         /// <param name="il">The given IL generator.</param>
-        /// <param name="locals">The local variables in scope.</param>
-        public abstract void Emit(ILGenerator il, Dictionary<string, int> locals);
+        /// <param name="scope">The local scope.</param>
+        public abstract void Emit(ILGenerator il, Scope scope);
     }
 }

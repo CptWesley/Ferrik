@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Ferrik.HighLevel;
+using Ferrik.HighLevel.Statements;
+using Ferrik.HighLevel.Expressions;
 
 namespace Ferrik.Example
 {

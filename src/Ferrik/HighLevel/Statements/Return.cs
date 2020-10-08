@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
-using Ferrik.LowLevel;
+﻿using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel
+namespace Ferrik.HighLevel.Statements
 {
     /// <summary>
     /// Represents a return statement.
@@ -22,10 +20,10 @@ namespace Ferrik.HighLevel
         public Expression Expression { get; }
 
         /// <inheritdoc/>
-        public override void Emit(ILGenerator il, Dictionary<string, int> locals)
+        public override void Emit(ILGenerator il, Scope scope)
         {
-            Expression.Emit(il, locals);
-            il.Emit(new RetOpCode());
+            Expression.Emit(il, scope);
+            il.Emit(TypedOpCodes.Ret);
         }
     }
 }
