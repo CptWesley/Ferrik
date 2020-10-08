@@ -316,7 +316,14 @@ namespace Ferrik.LowLevel
         {ToProperties(args)}
         /// <inheritdoc/>
         public override void Emit(System.Reflection.Emit.ILGenerator il)
-            => il?.Emit(System.Reflection.Emit.OpCodes.{opCode}{ToArguments(args.Length)});
+        {{
+            if (il is null)
+            {{
+                throw new System.ArgumentNullException(nameof(il));
+            }}
+            
+            il.Emit(System.Reflection.Emit.OpCodes.{opCode}{ToArguments(args.Length)});
+        }}
         
         /// <inheritdoc/>
         public override string ToString()
