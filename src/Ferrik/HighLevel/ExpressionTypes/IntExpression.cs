@@ -28,7 +28,23 @@ namespace Ferrik.HighLevel.ExpressionTypes
                 throw new ArgumentNullException(nameof(il));
             }
 
-            il.Emit(TypedOpCodes.LdcI4(Value));
+            il.Emit(GetOpCode());
         }
+
+        private TypedOpCode GetOpCode()
+            => Value switch
+            {
+                0 => TypedOpCodes.LdcI4_0,
+                1 => TypedOpCodes.LdcI4_1,
+                2 => TypedOpCodes.LdcI4_2,
+                3 => TypedOpCodes.LdcI4_3,
+                4 => TypedOpCodes.LdcI4_4,
+                5 => TypedOpCodes.LdcI4_5,
+                6 => TypedOpCodes.LdcI4_6,
+                7 => TypedOpCodes.LdcI4_7,
+                8 => TypedOpCodes.LdcI4_8,
+                int x when x >= -128 && x <= 127 => TypedOpCodes.LdcI4S((sbyte)Value),
+                _ => TypedOpCodes.LdcI4(Value),
+            };
     }
 }

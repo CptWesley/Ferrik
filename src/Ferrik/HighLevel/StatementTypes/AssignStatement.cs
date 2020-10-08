@@ -41,7 +41,18 @@ namespace Ferrik.HighLevel.StatementTypes
 
             ushort index = scope.Get(Name);
             Value.Emit(il, scope);
-            il.Emit(TypedOpCodes.Stloc(index));
+            il.Emit(GetOpCode(index));
         }
+
+        private static TypedOpCode GetOpCode(ushort index)
+            => index switch
+            {
+                0 => TypedOpCodes.Stloc0,
+                1 => TypedOpCodes.Stloc1,
+                2 => TypedOpCodes.Stloc2,
+                3 => TypedOpCodes.Stloc3,
+                ushort x when x <= 255 => TypedOpCodes.StlocS((byte)index),
+                _ => TypedOpCodes.Stloc(index),
+            };
     }
 }

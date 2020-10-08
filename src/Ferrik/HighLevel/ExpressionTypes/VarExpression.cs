@@ -34,7 +34,18 @@ namespace Ferrik.HighLevel.ExpressionTypes
             }
 
             ushort index = scope.Get(Name);
-            il.Emit(TypedOpCodes.Ldloc(index));
+            il.Emit(GetOpCode(index));
         }
+
+        private static TypedOpCode GetOpCode(ushort index)
+            => index switch
+            {
+                0 => TypedOpCodes.Ldloc0,
+                1 => TypedOpCodes.Ldloc1,
+                2 => TypedOpCodes.Ldloc2,
+                3 => TypedOpCodes.Ldloc3,
+                ushort x when x <= 255 => TypedOpCodes.LdlocS((byte)index),
+                _ => TypedOpCodes.Ldloc(index),
+            };
     }
 }
