@@ -393,8 +393,32 @@ namespace Ferrik.LowLevel
         private static string ToClassName(string instructionName)
         {
             string[] parts = instructionName.Split('.');
-            return string.Join(string.Empty, parts.Select(CapitalizeFirstLetter));
+            StringBuilder sb = new StringBuilder();
+
+            string previous = "X";
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string part = CapitalizeFirstLetter(parts[i]);
+                if (LastCharIsNum(previous) && FirstCharIsNum(part))
+                {
+                    sb.Append("_");
+                }
+
+                sb.Append(part);
+                previous = part;
+            }
+
+            return sb.ToString();
         }
+
+        private static bool FirstCharIsNum(string x)
+            => IsNum(x[0]);
+
+        private static bool LastCharIsNum(string x)
+            => IsNum(x[x.Length - 1]);
+
+        private static bool IsNum(char c)
+            => c >= '0' && c <= '9';
 
         private static string ToOpCodeName(string instructionName)
         {
