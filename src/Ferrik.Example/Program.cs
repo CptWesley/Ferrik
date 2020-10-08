@@ -8,12 +8,7 @@ namespace Ferrik.Example
     {
         public static void Main(string[] args)
         {
-            AssemblyName an = new AssemblyName("DynamicAssembly");
-            AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(an, AssemblyBuilderAccess.RunAndCollect);
-            ModuleBuilder mob = ab.DefineDynamicModule(an.Name);
-
-            string typeName = "DynamicType";
-            TypeBuilder tb = mob.DefineType(typeName, TypeAttributes.Public | TypeAttributes.Class);
+            TypeBuilder tb = DynamicTypes.Define();
             string methodName = "DynamicMethod";
             MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), null);
             ILGenerator il = mb.GetILGenerator();
