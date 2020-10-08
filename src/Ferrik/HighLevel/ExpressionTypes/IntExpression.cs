@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Expressions
+namespace Ferrik.HighLevel.ExpressionTypes
 {
     /// <summary>
     /// Represents an integer expression.
     /// </summary>
-    public class Int : Expression
+    public class IntExpression : Expression
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Int"/> class.
+        /// Initializes a new instance of the <see cref="IntExpression"/> class.
         /// </summary>
         /// <param name="value">The value of the integer.</param>
-        public Int(int value)
+        public IntExpression(int value)
             => Value = value;
 
         /// <summary>

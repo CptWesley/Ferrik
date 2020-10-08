@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Ferrik.HighLevel.Statements;
-using Ferrik.HighLevel.Expressions;
 
 namespace Ferrik.Example
 {
@@ -28,25 +26,13 @@ namespace Ferrik.Example
         }
 
         private static Statement CreateBody()
-        {
-            Statement dec1 = new Declare("a", typeof(int));
-            Statement dec2 = new Declare("b", typeof(int));
-            Statement dec3 = new Declare("c", typeof(int));
-            Statement ass1 = new Assign("a", new Int(40));
-            Statement ass2 = new Assign("b", new Int(2));
-            Statement ass3 = new Assign("c", new Add(new Var("a"), new Var("b")));
-            Statement ret = new Return(new Var("c"));
-            Statement block = new Block(new[] {
-                dec1,
-                dec2,
-                dec3,
-                ass1,
-                ass2,
-                ass3,
-                ret
-            });
-
-            return block;
-        }
+            => Statements.Builder()
+            .Declare("a", typeof(int))
+            .Declare("b", typeof(int))
+            .Declare("c", typeof(int))
+            .Assign("a", Expressions.Int(40))
+            .Assign("b", Expressions.Int(2))
+            .Assign("c", Expressions.Add(Expressions.Var("a"), Expressions.Var("b")))
+            .Return(Expressions.Var("c"));
     }
 }

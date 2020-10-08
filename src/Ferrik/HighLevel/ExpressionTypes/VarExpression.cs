@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Expressions
+namespace Ferrik.HighLevel.ExpressionTypes
 {
     /// <summary>
     /// Represents a variable expression.
     /// </summary>
-    public class Var : Expression
+    public class VarExpression : Expression
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Var"/> class.
+        /// Initializes a new instance of the <see cref="VarExpression"/> class.
         /// </summary>
         /// <param name="name">The name of the variable.</param>
-        public Var(string name)
+        public VarExpression(string name)
             => Name = name;
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Ferrik.OpCodeClassGenerator
     [Generator]
     public class ClassGenerator : ISourceGenerator
     {
-        private static string Lines = @"
+        private static readonly string Lines = @"
 add
 add.ovf
 add.ovf.un

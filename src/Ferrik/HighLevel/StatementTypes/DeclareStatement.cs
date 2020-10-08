@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Statements
+namespace Ferrik.HighLevel.StatementTypes
 {
     /// <summary>
-    /// Represents an assignment statement.
+    /// Represents a variable declaration.
     /// </summary>
-    public class Assign : Statement
+    public class DeclareStatement : Statement
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Assign"/> class.
+        /// Initializes a new instance of the <see cref="DeclareStatement"/> class.
         /// </summary>
         /// <param name="name">The name of the local variable.</param>
-        /// <param name="value">The new value of the variable.</param>
-        public Assign(string name, Expression value)
-            => (Name, Value) = (name, value);
+        /// <param name="type">The type of the local variable.</param>
+        public DeclareStatement(string name, Type type)
+            => (Name, Type) = (name, type);
 
         /// <summary>
         /// Gets the name of the declared local.
@@ -24,7 +24,7 @@ namespace Ferrik.HighLevel.Statements
         /// <summary>
         /// Gets the type of the declared local.
         /// </summary>
-        public Expression Value { get; }
+        public Type Type { get; }
 
         /// <inheritdoc/>
         public override void Emit(ILGenerator il, Scope scope)
@@ -39,9 +39,8 @@ namespace Ferrik.HighLevel.Statements
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            ushort index = scope.Get(Name);
-            Value.Emit(il, scope);
-            il.Emit(TypedOpCodes.Stloc(index));
+            LocalBuilder lb = il.DeclareLocal(Type);
+            scope.Add(Name, lb.LocalIndex);
         }
     }
 }

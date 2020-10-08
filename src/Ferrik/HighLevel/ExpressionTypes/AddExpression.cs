@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Expressions
+namespace Ferrik.HighLevel.ExpressionTypes
 {
     /// <summary>
     /// Represents an integer expression.
     /// </summary>
-    public class Add : Expression
+    public class AddExpression : Expression
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Add"/> class.
+        /// Initializes a new instance of the <see cref="AddExpression"/> class.
         /// </summary>
         /// <param name="left">The expression at the left-hand side of the operation.</param>
         /// <param name="right">The expression at the right-hand side of the operation.</param>
-        public Add(Expression left, Expression right)
+        public AddExpression(Expression left, Expression right)
             => (Left, Right) = (left, right);
 
         /// <summary>

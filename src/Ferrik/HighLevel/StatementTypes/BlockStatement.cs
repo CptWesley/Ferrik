@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Statements
+namespace Ferrik.HighLevel.StatementTypes
 {
     /// <summary>
     /// Represents a statement block.
     /// </summary>
-    public class Block : Statement
+    public class BlockStatement : Statement
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Block"/> class.
+        /// Initializes a new instance of the <see cref="BlockStatement"/> class.
         /// </summary>
         /// <param name="statements">The statements contained in the block.</param>
-        public Block(IEnumerable<Statement> statements)
+        public BlockStatement(IEnumerable<Statement> statements)
             => Statements = statements;
 
         /// <summary>

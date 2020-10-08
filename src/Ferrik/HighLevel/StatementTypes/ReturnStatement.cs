@@ -1,17 +1,17 @@
 ﻿using System.Reflection.Emit;
 
-namespace Ferrik.HighLevel.Statements
+namespace Ferrik.HighLevel.StatementTypes
 {
     /// <summary>
     /// Represents a return statement.
     /// </summary>
-    public class Return : Statement
+    public class ReturnStatement : Statement
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Return"/> class.
+        /// Initializes a new instance of the <see cref="ReturnStatement"/> class.
         /// </summary>
         /// <param name="expression">The expression that needs to be returned.</param>
-        public Return(Expression expression)
+        public ReturnStatement(Expression expression)
             => Expression = expression;
 
         /// <summary>
