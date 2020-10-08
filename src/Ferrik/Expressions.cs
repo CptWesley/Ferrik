@@ -33,5 +33,27 @@ namespace Ferrik
         /// <returns>The new expression.</returns>
         public static Expression Add(Expression left, Expression right)
             => new AddExpression(left, right);
+
+        /// <summary>
+        /// Creates a new boolean constant expression.
+        /// </summary>
+        /// <param name="value">The value of the boolean constant.</param>
+        /// <returns>The new expression.</returns>
+        public static Expression Bool(bool value)
+            => new BoolExpression(value);
+
+        /// <summary>
+        /// Creates a new true expression.
+        /// </summary>
+        /// <returns>The new expression.</returns>
+        public static Expression True()
+            => Bool(true);
+
+        /// <summary>
+        /// Creates a new false expression.
+        /// </summary>
+        /// <returns>The new expression.</returns>
+        public static Expression False()
+            => Bool(false);
     }
 }
