@@ -78,5 +78,14 @@ namespace Ferrik
         /// <returns>The new statement.</returns>
         public static Statement If(Expression condition, Statement then, Statement @else)
             => new IfStatement(condition, then, @else);
+
+        /// <summary>
+        /// Creates a new while statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="body">The body of the loop.</param>
+        /// <returns>The new statement.</returns>
+        public static Statement While(Expression condition, Statement body)
+            => new WhileStatement(condition, body);
     }
 }

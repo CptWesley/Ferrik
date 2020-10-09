@@ -118,5 +118,14 @@ namespace Ferrik.HighLevel
         /// <returns>The same builder.</returns>
         public StatementBuilder If(Expression condition, Statement then, Statement @else)
             => Add(Statements.If(condition, then, @else));
+
+        /// <summary>
+        /// Adds a new while statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="body">The body of the loop.</param>
+        /// <returns>The same builder.</returns>
+        public StatementBuilder While(Expression condition, Statement body)
+            => Add(Statements.While(condition, body));
     }
 }

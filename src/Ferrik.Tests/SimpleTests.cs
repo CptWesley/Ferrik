@@ -88,5 +88,28 @@ namespace Ferrik.Tests
             AssertThat(dynamicObject.Invoke(mb, true)).IsEqualTo(42);
             AssertThat(dynamicObject.Invoke(mb, false)).IsEqualTo(1337);
         }
+
+        /// <summary>
+        /// Checks that a simple while works correctly.
+        /// </summary>
+        [Fact]
+        public static void While()
+        {
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), new[] { typeof(int) });
+            ILGenerator il = mb.GetILGenerator();
+            Statement body = Statements.Builder()
+                .Declare("x", typeof(int))
+                .Assign("x", Expressions.Int(0))
+                .While(Expressions.GreaterThan(Expressions.Arg(1), Expressions.Int(0)), Statements.Builder()
+                    .Assign("x", Expressions.Add(Expressions.Var("x"), Expressions.Int(2)))
+                    .Assign(1, Expressions.Subtract(Expressions.Arg(1), Expressions.Int(1))))
+                .Return(Expressions.Var("x"));
+            il.Emit(body);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb, 40)).IsEqualTo(80);
+            AssertThat(dynamicObject.Invoke(mb, 2)).IsEqualTo(4);
+        }
     }
 }
