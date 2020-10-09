@@ -39,10 +39,25 @@ namespace Ferrik.HighLevel.StatementTypes
                 throw new ArgumentNullException(nameof(scope));
             }
 
-            ushort index = scope.Get(Name);
-            Value.Emit(il, scope);
-            il.Emit(GetOpCode(index));
+            if (Name != null && Name.Length > 1 && Name[0] == '@' && ushort.TryParse(Name.Substring(1), out ushort paramIndex))
+            {
+                Value.Emit(il, scope);
+                il.Emit(GetParamOpCode(paramIndex));
+            }
+            else
+            {
+                ushort index = scope.Get(Name);
+                Value.Emit(il, scope);
+                il.Emit(GetOpCode(index));
+            }
         }
+
+        private static TypedOpCode GetParamOpCode(ushort index)
+            => index switch
+            {
+                ushort x when x <= 255 => TypedOpCodes.StargS((byte)index),
+                _ => TypedOpCodes.Starg(index),
+            };
 
         private static TypedOpCode GetOpCode(ushort index)
             => index switch
