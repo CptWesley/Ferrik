@@ -240,7 +240,7 @@ namespace Ferrik
     /// <summary>
     /// Holds functions for creating opcodes.
     /// </summary>
-    public static class TypedOpCodes
+    public static partial class TypedOpCodes
     {{
         {string.Join(Environment.NewLine, lines.Select(ToStaticField))}
         {string.Join(Environment.NewLine, lines.Select(ToStaticMethod))}
