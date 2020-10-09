@@ -16,26 +16,26 @@ add.ovf
 add.ovf.un
 and
 arglist
-beq int
-beq.s sbyte
-bge int
-bge.s sbyte
-bge.un int
-bge.un.s sbyte
-bgt int
-bgt.s sbyte
-bgt.un int
-bgt.un.s sbyte
-ble int
-ble.s sbyte
-ble.un int
-ble.un.s sbyte
-blt int
-blt.s sbyte
-blt.un int
-blt.un.s sbyte
-bne.un int
-bne.un.s sbyte
+beq System.Reflection.Emit.Label
+beq.s System.Reflection.Emit.Label
+bge System.Reflection.Emit.Label
+bge.s System.Reflection.Emit.Label
+bge.un System.Reflection.Emit.Label
+bge.un.s System.Reflection.Emit.Label
+bgt System.Reflection.Emit.Label
+bgt.s System.Reflection.Emit.Label
+bgt.un System.Reflection.Emit.Label
+bgt.un.s System.Reflection.Emit.Label
+ble System.Reflection.Emit.Label
+ble.s System.Reflection.Emit.Label
+ble.un System.Reflection.Emit.Label
+ble.un.s System.Reflection.Emit.Label
+blt System.Reflection.Emit.Label
+blt.s System.Reflection.Emit.Label
+blt.un System.Reflection.Emit.Label
+blt.un.s System.Reflection.Emit.Label
+bne.un System.Reflection.Emit.Label
+bne.un.s System.Reflection.Emit.Label
 box System.Type
 br System.Reflection.Emit.Label
 br.s System.Reflection.Emit.Label
@@ -45,6 +45,7 @@ brfalse.s System.Reflection.Emit.Label
 brtrue System.Reflection.Emit.Label
 brtrue.s System.Reflection.Emit.Label
 call System.Reflection.MethodInfo
+calli System.Reflection.MethodInfo
 callvirt System.Reflection.MethodInfo
 castclass System.Type
 ceq
@@ -68,6 +69,8 @@ conv.ovf.i4
 conv.ovf.i4.un
 conv.ovf.i8
 conv.ovf.i8.un
+conv.ovf.u
+conv.ovf.u.un
 conv.ovf.u1
 conv.ovf.u1.un
 conv.ovf.u2
@@ -219,6 +222,33 @@ throw
 unbox System.Type
 unbox.any System.Type
 xor
+
+raw.beq int
+raw.beq.s sbyte
+raw.bge int
+raw.bge.s sbyte
+raw.bge.un int
+raw.bge.un.s sbyte
+raw.bgt int
+raw.bgt.s sbyte
+raw.bgt.un int
+raw.bgt.un.s sbyte
+raw.ble int
+raw.ble.s sbyte
+raw.ble.un int
+raw.ble.un.s sbyte
+raw.blt int
+raw.blt.s sbyte
+raw.blt.un int
+raw.blt.un.s sbyte
+raw.bne.un int
+raw.bne.un.s sbyte
+raw.br int
+raw.br.s sbyte
+raw.brfalse int
+raw.brfalse.s sbyte
+raw.brtrue int
+raw.brtrue.s sbyte
 ";
 
         public void Execute(GeneratorExecutionContext context)
@@ -284,7 +314,7 @@ namespace Ferrik
         /// <summary>
         /// An object representing the {instructionName} instruction.
         /// </summary>
-        public static TypedOpCode {methodName}({ToArguments(args)})
+        public static TypedOpCode {methodName.Replace("Raw", string.Empty)}({ToArguments(args)})
             => new Ferrik.LowLevel.{methodName}OpCode({string.Join(", ", args.Select((x, i) => $"arg{i + 1}"))});
 ";
         }
@@ -422,7 +452,7 @@ namespace Ferrik.LowLevel
 
         private static string ToOpCodeName(string instructionName)
         {
-            string[] parts = instructionName.Split('.');
+            IEnumerable<string> parts = instructionName.Split('.').Where(x => x != "raw");
             return string.Join("_", parts.Select(CapitalizeFirstLetter));
         }
 

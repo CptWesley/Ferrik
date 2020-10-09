@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Reflection.Emit;
 using Xunit;
 using static AssertNet.Assertions;
@@ -110,6 +111,53 @@ namespace Ferrik.Tests
             object dynamicObject = tb.CreateInstance();
             AssertThat(dynamicObject.Invoke(mb, 40)).IsEqualTo(80);
             AssertThat(dynamicObject.Invoke(mb, 2)).IsEqualTo(4);
+        }
+
+        /// <summary>
+        /// Checks that a simple while works correctly.
+        /// </summary>
+        [Fact]
+        public static void Func1()
+        {
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), Array.Empty<Type>());
+            ILGenerator il = mb.GetILGenerator();
+            il.Emit(() => 42);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb)).IsEqualTo(42);
+        }
+
+        /// <summary>
+        /// Checks that a simple while works correctly.
+        /// </summary>
+        [Fact]
+        public static void Func2()
+        {
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), new[] { typeof(int) });
+            ILGenerator il = mb.GetILGenerator();
+            il.Emit<int, int>((x) => x * 2);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb, 40)).IsEqualTo(80);
+            AssertThat(dynamicObject.Invoke(mb, 2)).IsEqualTo(4);
+        }
+
+        /// <summary>
+        /// Checks that a simple while works correctly.
+        /// </summary>
+        [Fact]
+        public static void Func3()
+        {
+            int y = 42;
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), Array.Empty<Type>());
+            ILGenerator il = mb.GetILGenerator();
+            il.Emit(() => y);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb)).IsEqualTo(y);
         }
     }
 }
