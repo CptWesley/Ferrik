@@ -68,5 +68,15 @@ namespace Ferrik
         /// <returns>The new statement.</returns>
         public static Statement If(Expression condition, Statement then)
             => new IfStatement(condition, then);
+
+        /// <summary>
+        /// Creates a new if statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="then">The body of the if statement.</param>
+        /// <param name="else">The body of the else case.</param>
+        /// <returns>The new statement.</returns>
+        public static Statement If(Expression condition, Statement then, Statement @else)
+            => new IfStatement(condition, then, @else);
     }
 }

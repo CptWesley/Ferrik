@@ -108,5 +108,15 @@ namespace Ferrik.HighLevel
         /// <returns>The same builder.</returns>
         public StatementBuilder If(Expression condition, Statement then)
             => Add(Statements.If(condition, then));
+
+        /// <summary>
+        /// Adds a new if statement.
+        /// </summary>
+        /// <param name="condition">The condition expression that must hold.</param>
+        /// <param name="then">The body of the if statement.</param>
+        /// <param name="else">The body of the else case.</param>
+        /// <returns>The same builder.</returns>
+        public StatementBuilder If(Expression condition, Statement then, Statement @else)
+            => Add(Statements.If(condition, then, @else));
     }
 }

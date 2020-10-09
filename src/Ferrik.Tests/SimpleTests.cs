@@ -67,5 +67,26 @@ namespace Ferrik.Tests
             AssertThat(dynamicObject.Invoke(mb, 40)).IsEqualTo(false);
             AssertThat(dynamicObject.Invoke(mb, 80)).IsEqualTo(true);
         }
+
+        /// <summary>
+        /// Checks that a simple if works correctly.
+        /// </summary>
+        [Fact]
+        public static void IfElse()
+        {
+            TypeBuilder tb = DynamicTypes.Define();
+            string methodName = "DynamicMethod";
+            MethodBuilder mb = tb.DefineMethod(methodName, MethodAttributes.Public, typeof(int), new[] { typeof(bool) });
+            ILGenerator il = mb.GetILGenerator();
+            Statement body = Statements.Builder()
+                .Declare("x", typeof(int))
+                .Assign("x", Expressions.Int(69))
+                .If(Expressions.Arg(1), Statements.Assign("x", Expressions.Subtract(Expressions.Var("x"), Expressions.Int(27))), Statements.Assign("x", Expressions.Add(Expressions.Var("x"), Expressions.Int(1268))))
+                .Return(Expressions.Var("x"));
+            il.Emit(body);
+            object dynamicObject = tb.CreateInstance();
+            AssertThat(dynamicObject.Invoke(mb, true)).IsEqualTo(42);
+            AssertThat(dynamicObject.Invoke(mb, false)).IsEqualTo(1337);
+        }
     }
 }
